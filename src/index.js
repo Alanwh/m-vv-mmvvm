@@ -61,6 +61,7 @@ class Observe {
 class Dep {
   constructor () {
     this.subs = []
+    this.target = null
   }
   addSub (sub) {
     this.subs.push(sub)
@@ -70,27 +71,31 @@ class Dep {
   }
 }
 
-function Watcher(vm, exp, fn) {
- this.fn = fn
- this.vm = vm
- this.exp = exp
- // watch 添加到订阅者
- Dep.target = this
- let val = vm
- let arr = exp.split('.')
- arr.forEach((k) => {
-  val = val[k]
- })
- Dep.target = null
-}
-
-Watcher.prototype.update = function () {
-  let val = this.vm
-  let arr = this.exp.split('.')
-  arr.forEach((k) => {
-    val = val[k]
-  })
-  this.fn(val)
+class Watcher {
+  constructor(vm, exp, fn) {
+    this.init(vm, exp, fn)
+  }
+  init(vm, exp, fn){
+    this.fn = fn
+    this.vm = vm
+    this.exp = exp
+    // watch 添加到订阅者
+    Dep.target = this
+    let val = vm
+    let arr = exp.split('.')
+    arr.forEach((k) => {
+      val = val[k]
+    })
+    Dep.target = null
+  }
+  update() {
+    let val = this.vm
+    let arr = this.exp.split('.')
+    arr.forEach((k) => {
+      val = val[k]
+    })
+    this.fn(val)
+  }
 }
 
 function Compile(el, vm){
