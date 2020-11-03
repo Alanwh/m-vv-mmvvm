@@ -79,7 +79,12 @@ class Watcher {
     this.fn = fn
     this.vm = vm
     this.exp = exp
-    // watch 添加到订阅者
+    /**
+     * watcher 添加到订阅者
+     * 缓存自己
+     * 强制执行监听器里的get函数
+     * 释放自己
+     */
     Dep.target = this
     let val = vm
     let arr = exp.split('.')
