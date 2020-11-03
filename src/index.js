@@ -1,11 +1,21 @@
-function Vue(options = {}) {
-  this.$options = options
-  this._data = this.$options.data
-  
-  observe(this._data)
-  proxyKeys.call(this, this._data)
-  initComputed.call(this)
-  new Compile(options.el, this)
+class Vue {
+  constructor(options = {}) {
+    this.initState(options)
+  }
+
+  initState(options) {
+    this.$options = options
+    this._data = this.$options.data
+
+    // 劫持数据
+    observe(this._data)
+    // 代理data到vue上
+    proxyKeys.call(this, this._data)
+    // 初始化computed
+    initComputed.call(this)
+    // 初始化编译器
+    new Compile(options.el, this)
+  }
 }
 
 function observe(data) {
