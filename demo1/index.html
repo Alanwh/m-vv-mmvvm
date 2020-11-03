@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Object.definePropert demo</title>
+</head>
+<body>
+  <script>
+    let obj = {}
+    val = 222
+    Object.defineProperty(obj, 'school', {
+      // value: 2,
+      // writable: true,
+      get() {
+        console.log('get 执行')
+        return val
+      },
+      set(newVal) {
+        console.log('set 执行')
+        val = newVal
+      },
+      enumerable: true,
+      configurable: true
+    })
+    
+    // console.log(obj.school)
+    
+    // configurable 能否删除
+    // delete obj.school
+    // console.log(obj.school)
+
+    // configurable 能否修改
+    // obj.school = 'abc'
+    // console.log(obj.school)
+
+    // enumerable 能否枚举
+    // for(let i in obj) {
+    //   console.log(i, 'obj====')
+    // }
+  </script>
+</body>
+</html>
